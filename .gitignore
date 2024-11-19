@@ -1,0 +1,24 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Entornos de desarrollo
+.env
+.env.local
+.env.*.local
+
+# Compilados y builds
+dist/
+build/
+
+# Archivos temporales
+*.tmp
+*.swp
