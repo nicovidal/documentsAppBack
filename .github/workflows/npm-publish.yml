@@ -36,11 +36,11 @@ jobs:
         run: |
           # Despliegue en Azure
           ssh -o StrictHostKeyChecking=no azureuser@${{ secrets.AZURE_IP }} "
-            export DB_USER='${{ secrets.DB_USER }}' &&
-            export DB_HOST='${{ secrets.DB_HOST }}' &&
-            export DB_NAME='${{ secrets.DB_NAME }}' &&
-            export DB_PASSWORD='${{ secrets.DB_PASSWORD }}' &&
-            export DB_PORT='${{ secrets.DB_PORT }}' &&
+            export DB_USER=${{ secrets.DB_USER }} &&
+            export DB_HOST=${{ secrets.DB_HOST }} &&
+            export DB_NAME=${{ secrets.DB_NAME }} &&
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }} &&
+            export DB_PORT=${{ secrets.DB_PORT }} &&
             cd /home/BackEnd/documentsAppBack &&
             sudo git pull origin main &&
             sudo npm install --production &&
