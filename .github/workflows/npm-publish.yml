@@ -39,8 +39,9 @@ jobs:
 
       - name: Deploy to Azure
         run: |
-          ssh -o StrictHostKeyChecking=no user@${{ secrets.AZURE_IP }}
-          cd /home/BackEnd/documentsAppBack &&
-          git pull origin main &&
-          npm install --production &&
-          pm2 
+          ssh -o StrictHostKeyChecking=no user@${{ secrets.AZURE_IP }} "
+            cd /home/BackEnd/documentsAppBack &&
+            sudo git pull origin main &&
+            sudo npm install --production &&
+            sudo pm2 restart all
+          "
