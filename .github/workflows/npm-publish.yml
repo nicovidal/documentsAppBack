@@ -39,7 +39,7 @@ jobs:
 
       - name: Deploy to Azure
         run: |
-          ssh -o StrictHostKeyChecking=no user@${{ secrets.AZURE_IP }} "
+          ssh -o StrictHostKeyChecking=no user@${{ secrets.AZURE_IP }}
           cd /path/to/your/backend &&
           git pull origin main &&
           npm install --production &&
