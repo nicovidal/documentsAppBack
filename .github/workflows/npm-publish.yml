@@ -36,6 +36,15 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
+
+      - name: Verify environment variables
+        run: |
+          echo "DB_USER=$DB_USER"
+          echo "DB_HOST=$DB_HOST"
+          echo "DB_NAME=$DB_NAME"
+          echo "DB_PASSWORD=$DB_PASSWORD"
+          echo "DB_PORT=$DB_PORT"
+
       - name: Deploy to Azure
         env:
           DB_USER: ${{ secrets.DB_USER }}
