@@ -10,7 +10,7 @@ app.get('/ping',(req,res)=>{
 
 app.get('/tasks',(req,res)=>{
     res.send([])
-    console.log(res)
+    console.log(req)
 })
 
 
