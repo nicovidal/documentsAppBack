@@ -13,6 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up environment variables
+        run: |
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: npm ci
 
@@ -36,11 +44,11 @@ jobs:
         run: |
           # Despliegue en Azure
           ssh -o StrictHostKeyChecking=no azureuser@${{ secrets.AZURE_IP }} "
-            export DB_USER=${{ secrets.DB_USER }} &&
-            export DB_HOST=${{ secrets.DB_HOST }} &&
-            export DB_NAME=${{ secrets.DB_NAME }} &&
-            export DB_PASSWORD=${{ secrets.DB_PASSWORD }} &&
-            export DB_PORT=${{ secrets.DB_PORT }} &&
+            export DB_USER='${{ secrets.DB_USER }}' &&
+            export DB_HOST='${{ secrets.DB_HOST }}' &&
+            export DB_NAME='${{ secrets.DB_NAME }}' &&
+            export DB_PASSWORD='${{ secrets.DB_PASSWORD }}' &&
+            export DB_PORT='${{ secrets.DB_PORT }}' &&
             cd /home/BackEnd/documentsAppBack &&
             sudo git pull origin main &&
             sudo npm install --production &&
