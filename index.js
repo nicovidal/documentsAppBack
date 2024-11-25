@@ -1,2 +1,4 @@
+const app=require('./routes/prueba')
 
-console.log('Listo')
+app.listen(3000)
+console.log('Server ok')
