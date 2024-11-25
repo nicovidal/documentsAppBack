@@ -10,6 +10,7 @@ const pool = new Pool({
 });
 
 // Función para conectar a la base de datos
+console.log(pool)
 const dbConnection = async () => {
   try {
 
