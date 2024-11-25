@@ -40,7 +40,7 @@ jobs:
       - name: Deploy to Azure
         run: |
           ssh -o StrictHostKeyChecking=no user@${{ secrets.AZURE_IP }}
-          cd /path/to/your/backend &&
+          cd /home/BackEnd/documentsAppBack &&
           git pull origin main &&
           npm install --production &&
           pm2 
