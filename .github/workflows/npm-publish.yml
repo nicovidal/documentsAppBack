@@ -3,8 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - test  # Ejecuta la acción al hacer push en la rama test
-      - main  # También ejecuta la acción al hacer push en la rama main
+      - test
+      - main
 
 jobs:
   test:
@@ -13,10 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Set up environment variables
+        run: |
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm ci
@@ -37,22 +40,26 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
 
-      - name: Set up environment variables
-        run: |
-          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
-
       - name: Deploy to Azure
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PORT: ${{ secrets.DB_PORT }}
         run: |
+          echo "DB_USER: $DB_USER"
+          echo "DB_HOST: $DB_HOST"
+          echo "DB_NAME: $DB_NAME"
+          echo "DB_PASSWORD: $DB_PASSWORD"
+          echo "DB_PORT: $DB_PORT"
+          # Despliegue en Azure
           ssh -o StrictHostKeyChecking=no azureuser@${{ secrets.AZURE_IP }} "
-            export DB_USER=${{ secrets.DB_USER }} &&
-            export DB_HOST=${{ secrets.DB_HOST }} &&
-            export DB_NAME=${{ secrets.DB_NAME }} &&
-            export DB_PASSWORD=${{ secrets.DB_PASSWORD }} &&
-            export DB_PORT=${{ secrets.DB_PORT }} &&
+            export DB_USER=${DB_USER} &&
+            export DB_HOST=${DB_HOST} &&
+            export DB_NAME=${DB_NAME} &&
+            export DB_PASSWORD=${DB_PASSWORD} &&
+            export DB_PORT=${DB_PORT} &&
             cd /home/BackEnd/documentsAppBack &&
             sudo git pull origin main &&
             sudo npm install --production &&
