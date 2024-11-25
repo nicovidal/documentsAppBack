@@ -45,21 +45,21 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_NAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DB_NAME }}
           DB_PORT: ${{ secrets.DB_PORT }}
         run: |
-          sudo echo "DB_USER: $DB_USER"
-          sudo echo "DB_HOST: $DB_HOST"
-          sudo echo "DB_NAME: $DB_NAME"
-          sudo echo "DB_PASSWORD: $DB_PASSWORD"
-          sudo echo "DB_PORT: $DB_PORT"
+          echo "DB_USER: ${{ secrets.DB_USER }}"
+          echo "DB_HOST: ${{ secrets.DB_HOST }}"
+          echo "DB_NAME: ${{ secrets.DB_NAME }}"
+          echo "DB_PASSWORD: ${{ secrets.DB_NAME }}"
+          echo "DB_PORT: ${{ secrets.DB_PORT }}"
           # Despliegue en Azure
           ssh -o StrictHostKeyChecking=no azureuser@${{ secrets.AZURE_IP }} "
-            sudo export DB_USER=${DB_USER} &&
-            sudo export DB_HOST=${DB_HOST} &&
-            sudo export DB_NAME=${DB_NAME} &&
-            sudo export DB_PASSWORD=${DB_PASSWORD} &&
-            sudo export DB_PORT=${DB_PORT} &&
+            export DB_USER=${DB_USER} &&
+            export DB_HOST=${DB_HOST} &&
+            export DB_NAME=${DB_NAME} &&
+            export DB_PASSWORD=${DB_PASSWORD} &&
+            export DB_PORT=${DB_PORT} &&
             cd /home/BackEnd/documentsAppBack &&
             sudo git pull origin main &&
             sudo npm install --production &&
