@@ -27,7 +27,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'  # Despliega solo si es la rama main
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,13 +35,12 @@ jobs:
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }} 
+          ssh-private-key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
 
       - name: Deploy to Azure
         run: |
-          ssh user@<azure_ip> << EOF
-          cd /path/to/your/backend
-          git pull origin main
-          npm install --production
-          pm2 restart all
-          EOF
+          ssh -o StrictHostKeyChecking=no user@${{ secrets.AZURE_IP }} "
+          cd /path/to/your/backend &&
+          git pull origin main &&
+          npm install --production &&
+          pm2 
