@@ -3,7 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - test  # Solo ejecuta la acción al hacer push en la rama test
+      - test  # Ejecuta la acción al hacer push en la rama test
+      - main  # También ejecuta la acción al hacer push en la rama main
 
 jobs:
   test:
@@ -26,6 +27,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Despliega solo si es la rama main
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,14 +35,13 @@ jobs:
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }} # Agrega tu clave privada en GitHub Secrets
+          ssh-private-key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }} 
 
       - name: Deploy to Azure
         run: |
           ssh user@<azure_ip> << EOF
           cd /path/to/your/backend
-          git pull origin test
+          git pull origin main
           npm install --production
           pm2 restart all
           EOF
-
