@@ -16,7 +16,7 @@ const dbConnection = async () => {
   try {
 
     await pool.query('SELECT NOW()');
-    console.log('Base de datos conectada correctamente');
+    console.log('Base de datos conectada correctamente seba');
   } catch (error) {
     console.error('Error al conectar a la base de datosS:', error);
     throw new Error('Error al iniciar la base de datos');
