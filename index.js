@@ -2,6 +2,7 @@ const { dbConnection } = require('./database/config')
 const app=require('./routes/prueba')
 
 
+require('dotenv').config();
 
 
 
