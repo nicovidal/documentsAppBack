@@ -23,8 +23,8 @@ const startServer = async () => {
 };
 
 
+startServer();
+
 //routes
 app.use("/api/documents",require('./routes/documents'))
-
-startServer();
 

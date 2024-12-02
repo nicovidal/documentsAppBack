@@ -10,10 +10,21 @@ const getDocuments=async (req,res)=>{
 
         const documents=await Document.findAll()
 
-        console.log(documents)
+        if (!documents || documents.length === 0) {
+            return res.status(404).json({
+                ok: false,
+                message: "No documents found",
+            });
+        }
+
+
+        res.status(200).json({
+            ok:true,
+            documents
+        })
         
     } catch (error) {
-        
+       console.log(error)
     }
 }
 

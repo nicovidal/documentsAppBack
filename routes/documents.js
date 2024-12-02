@@ -4,7 +4,7 @@ const router=Router()
 
 
 
-router.get("/documents",getDocuments)
+router.get("/",getDocuments)
 
 
 
