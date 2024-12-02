@@ -11,6 +11,10 @@ const Document = sequelize.define('Document', {
     type: DataTypes.STRING,
     allowNull: false, 
   },
+  numeroCaja:{
+    type:DataTypes.STRING,
+    allowNull:true
+  }
 }, {
   tableName: 'documents',
   timestamps: true,

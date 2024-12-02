@@ -19,7 +19,7 @@ app.use(express.json());
 // Rutas
 app.use("/api/documents", require('./routes/documents'));
 
-// Inicio del servidor
+
 const startServer = async () => {
   try {
     if (process.env.NODE_ENV !== 'test') { 
