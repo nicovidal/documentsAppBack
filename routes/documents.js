@@ -1,11 +1,10 @@
 const {Router}=require('express')
-const { getDocuments } = require('../controllers/documentsController')
+const { getDocuments, createDocument } = require('../controllers/documentsController')
 const router=Router()
 
 
-
-router.get("/",getDocuments)
-
+router.get("/get",getDocuments)
+router.post("/create",createDocument)
 
 
 
