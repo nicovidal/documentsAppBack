@@ -32,7 +32,7 @@ const Box = sequelize.define("Box", {
     allowNull:true
   },
   nombre_sucursal:{
-    type:DataTypes.INTEGER,
+    type:DataTypes.STRING,
     allowNull:true
   }
 },{

@@ -22,12 +22,13 @@ app.use(express.json());
 app.use("/api/documents", require('./routes/documents'));
 app.use("/api/proceso", require('./routes/proceso'));
 app.use("/api/box", require('./routes/box'));
+app.use("/api/docto", require('./routes/docto'));
 
 
 const startServer = async () => {
   try {
     if (process.env.NODE_ENV !== 'test') { 
-      await sequelize.sync({ force: FALSE});
+      await sequelize.sync({ force: true});
       console.log('Tablas sincronizadas correctamente.');
       
       app.listen(3000, () => {
