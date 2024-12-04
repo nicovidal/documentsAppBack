@@ -28,7 +28,7 @@ app.use("/api/docto", require('./routes/docto'));
 const startServer = async () => {
   try {
     if (process.env.NODE_ENV !== 'test') { 
-      await sequelize.sync({ force: true});
+      await sequelize.sync({ force: false});
       console.log('Tablas sincronizadas correctamente.');
       
       app.listen(3000, () => {
