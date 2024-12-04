@@ -13,13 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up environment variables
+      - name: Set up environment variables for tests
         run: |
-          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER_TEST }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST_TEST }}" >> $GITHUB_ENV
+          echo "DB_NAME=${{ secrets.DB_NAME_TEST }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD_TEST }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT_TEST }}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm ci
@@ -40,9 +40,16 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
 
+      - name: Set up environment variables for production
+        run: |
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+
       - name: Deploy to Azure
         run: |
-          # Despliegue en Azure
           ssh -o StrictHostKeyChecking=no azureuser@${{ secrets.AZURE_IP }} "
             export DB_USER='${{ secrets.DB_USER }}' &&
             export DB_HOST='${{ secrets.DB_HOST }}' &&
@@ -54,5 +61,3 @@ jobs:
             sudo npm install --production &&
             sudo pm2 restart all
           "
-
-
